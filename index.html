@@ -1,0 +1,2364 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Astra AI</title>
+
+<meta name="description"
+      content="Astra AI — intelligent AI assistant created by Syed Riyan Shah.">
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(0,150,255,.20),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(150,50,255,.18),
+            transparent 30%
+        ),
+        #070b13;
+
+    color: #fff;
+
+    min-height: 100vh;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.background {
+    position: fixed;
+    inset: 0;
+
+    overflow: hidden;
+
+    z-index: -1;
+}
+
+.orb {
+    position: absolute;
+
+    border-radius: 50%;
+
+    filter: blur(80px);
+
+    opacity: .35;
+
+    animation:
+        float 12s infinite alternate ease-in-out;
+}
+
+.orb.one {
+    width: 350px;
+    height: 350px;
+
+    background: #1769ff;
+
+    left: -100px;
+    top: -100px;
+}
+
+.orb.two {
+    width: 300px;
+    height: 300px;
+
+    background: #9b2cff;
+
+    right: -80px;
+    top: 20%;
+
+    animation-delay: 2s;
+}
+
+.orb.three {
+    width: 250px;
+    height: 250px;
+
+    background: #00c8ff;
+
+    bottom: -80px;
+    left: 40%;
+
+    animation-delay: 4s;
+}
+
+@keyframes float {
+
+    from {
+        transform:
+            translate(0,0)
+            scale(1);
+    }
+
+    to {
+        transform:
+            translate(60px,40px)
+            scale(1.15);
+    }
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app {
+    display: flex;
+
+    height: 100vh;
+
+    width: 100%;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+    width: 270px;
+
+    background:
+        rgba(7,12,22,.78);
+
+    backdrop-filter: blur(25px);
+
+    border-right:
+        1px solid rgba(255,255,255,.08);
+
+    padding: 22px;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+.logo {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 22px;
+
+    font-weight: 800;
+
+    margin-bottom: 25px;
+}
+
+.logo-orb {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 30% 30%,
+            #fff,
+            #5f9cff 25%,
+            #6a00ff 70%
+        );
+
+    box-shadow:
+        0 0 25px rgba(80,130,255,.7);
+
+    animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+
+        box-shadow:
+            0 0 20px rgba(80,130,255,.5);
+    }
+
+    50% {
+        transform: scale(1.08);
+
+        box-shadow:
+            0 0 40px rgba(80,130,255,.9);
+    }
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.new-chat,
+.settings-btn {
+
+    width: 100%;
+
+    border:
+        1px solid rgba(255,255,255,.1);
+
+    background:
+        rgba(255,255,255,.06);
+
+    color: white;
+
+    padding: 13px;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    margin-bottom: 10px;
+
+    transition: .2s;
+}
+
+.new-chat:hover,
+.settings-btn:hover {
+
+    background:
+        rgba(255,255,255,.12);
+}
+
+
+/* =========================================================
+   CREATOR
+========================================================= */
+
+.creator {
+
+    margin-top: auto;
+
+    padding: 14px;
+
+    border-radius: 14px;
+
+    background:
+        rgba(255,255,255,.05);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    font-size: 13px;
+
+    color: #aeb8ca;
+}
+
+.creator strong {
+
+    color: white;
+
+    display: block;
+
+    margin-top: 5px;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main {
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 25px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.08);
+
+    background:
+        rgba(5,10,18,.45);
+
+    backdrop-filter: blur(20px);
+}
+
+.header-title {
+
+    font-weight: 700;
+}
+
+.status {
+
+    font-size: 12px;
+
+    color: #8ea2bd;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+.status-dot {
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #35e88a;
+
+    box-shadow:
+        0 0 10px #35e88a;
+}
+
+
+/* =========================================================
+   CHAT
+========================================================= */
+
+.chat {
+
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding: 30px;
+
+    scroll-behavior: smooth;
+}
+
+.chat-inner {
+
+    max-width: 900px;
+
+    margin: auto;
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+.message {
+
+    display: flex;
+
+    gap: 13px;
+
+    margin-bottom: 25px;
+
+    animation:
+        messageIn .25s ease;
+}
+
+@keyframes messageIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.avatar {
+
+    flex-shrink: 0;
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.user-avatar {
+
+    background: #26344d;
+}
+
+.ai-avatar {
+
+    background:
+        linear-gradient(
+            135deg,
+            #4c8dff,
+            #873cff
+        );
+}
+
+.message-content {
+
+    max-width: 850px;
+
+    min-width: 0;
+}
+
+.message-name {
+
+    font-size: 12px;
+
+    color: #8292a9;
+
+    margin-bottom: 6px;
+}
+
+.bubble {
+
+    line-height: 1.65;
+
+    white-space: pre-wrap;
+
+    word-break: break-word;
+}
+
+.user .bubble {
+
+    background:
+        rgba(255,255,255,.06);
+
+    border:
+        1px solid rgba(255,255,255,.07);
+
+    padding: 12px 15px;
+
+    border-radius: 14px;
+}
+
+.ai .bubble {
+
+    color: #e9eef7;
+}
+
+
+/* =========================================================
+   LISTEN
+========================================================= */
+
+.listen-btn {
+
+    margin-top: 10px;
+
+    background:
+        rgba(255,255,255,.06);
+
+    color: #cbd5e1;
+
+    border:
+        1px solid rgba(255,255,255,.09);
+
+    padding: 7px 11px;
+
+    border-radius: 9px;
+
+    cursor: pointer;
+
+    font-size: 12px;
+}
+
+.listen-btn:hover {
+
+    background:
+        rgba(255,255,255,.12);
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.image-preview {
+
+    max-width: 300px;
+
+    width: 100%;
+
+    border-radius: 14px;
+
+    margin-top: 10px;
+
+    border:
+        1px solid rgba(255,255,255,.1);
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading {
+
+    display: flex;
+
+    gap: 5px;
+
+    padding: 10px 0;
+}
+
+.loading span {
+
+    width: 7px;
+    height: 7px;
+
+    background: #9bbcff;
+
+    border-radius: 50%;
+
+    animation:
+        loading 1s infinite;
+}
+
+.loading span:nth-child(2) {
+    animation-delay: .15s;
+}
+
+.loading span:nth-child(3) {
+    animation-delay: .30s;
+}
+
+@keyframes loading {
+
+    0%,
+    60%,
+    100% {
+
+        transform: translateY(0);
+
+        opacity: .4;
+    }
+
+    30% {
+
+        transform: translateY(-6px);
+
+        opacity: 1;
+    }
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.input-area {
+
+    padding: 18px 25px 25px;
+}
+
+.input-box {
+
+    max-width: 900px;
+
+    margin: auto;
+
+    background:
+        rgba(13,20,33,.88);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    border-radius: 18px;
+
+    padding: 10px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.25);
+
+    backdrop-filter: blur(20px);
+}
+
+.input-row {
+
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 8px;
+}
+
+textarea {
+
+    flex: 1;
+
+    resize: none;
+
+    max-height: 160px;
+
+    min-height: 44px;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    color: white;
+
+    padding: 12px;
+
+    font-size: 15px;
+
+    font-family: inherit;
+}
+
+textarea::placeholder {
+
+    color: #6f7f96;
+}
+
+.icon-btn,
+.send-btn {
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    background:
+        rgba(255,255,255,.06);
+
+    color: white;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 17px;
+}
+
+.icon-btn:hover {
+
+    background:
+        rgba(255,255,255,.12);
+}
+
+.send-btn {
+
+    background:
+        linear-gradient(
+            135deg,
+            #347cff,
+            #7d38ff
+        );
+
+    border: none;
+}
+
+.send-btn:hover {
+
+    transform: translateY(-1px);
+}
+
+.language-row {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 5px 10px 0;
+
+    font-size: 12px;
+
+    color: #77869b;
+}
+
+select {
+
+    background: transparent;
+
+    color: #b7c4d7;
+
+    border: none;
+
+    outline: none;
+}
+
+select option {
+
+    background: #101724;
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        rgba(0,0,0,.65);
+
+    backdrop-filter: blur(8px);
+
+    z-index: 100;
+}
+
+.modal.show {
+
+    display: flex;
+}
+
+.modal-box {
+
+    width: min(440px, calc(100% - 30px));
+
+    background:
+        #111827;
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    position: relative;
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.5);
+}
+
+.modal-box h2 {
+
+    margin-bottom: 10px;
+}
+
+.modal-box p {
+
+    color: #9aa8bd;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    margin-bottom: 18px;
+}
+
+.modal-box input {
+
+    width: 100%;
+
+    padding: 13px;
+
+    border-radius: 10px;
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    background:
+        #080d16;
+
+    color: white;
+
+    outline: none;
+
+    margin-bottom: 10px;
+}
+
+.save-key-btn,
+.remove-key-btn {
+
+    width: 100%;
+
+    border: none;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    margin-top: 7px;
+
+    color: white;
+}
+
+.save-key-btn {
+
+    background:
+        linear-gradient(
+            135deg,
+            #347cff,
+            #7d38ff
+        );
+}
+
+.remove-key-btn {
+
+    background:
+        rgba(255,255,255,.08);
+}
+
+.close-btn {
+
+    position: absolute;
+
+    right: 15px;
+    top: 15px;
+
+    border: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 18px;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:700px) {
+
+    .sidebar {
+        display: none;
+    }
+
+    .header {
+        padding: 0 15px;
+    }
+
+    .chat {
+        padding: 20px 15px;
+    }
+
+    .input-area {
+        padding: 10px 12px 15px;
+    }
+
+    .message-content {
+        max-width:
+            calc(100vw - 75px);
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="background">
+
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+
+</div>
+
+
+<div class="app">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-orb"></div>
+
+            <span>Astra AI</span>
+
+        </div>
+
+
+        <button
+            class="new-chat"
+            onclick="newChat()"
+        >
+            ＋ New Chat
+        </button>
+
+
+        <button
+            class="settings-btn"
+            onclick="openSettings()"
+        >
+            ⚙️ API Settings
+        </button>
+
+
+        <div class="creator">
+
+            Created by
+
+            <strong>
+                Syed Riyan Shah
+            </strong>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+
+        <header class="header">
+
+            <div class="header-title">
+                Astra AI
+            </div>
+
+            <div class="status">
+
+                <span class="status-dot"></span>
+
+                Online
+
+            </div>
+
+        </header>
+
+
+        <!-- CHAT -->
+
+        <section
+            class="chat"
+            id="chat"
+        >
+
+            <div
+                class="chat-inner"
+                id="chatInner"
+            >
+
+                <div class="message ai">
+
+                    <div class="avatar ai-avatar">
+                        A
+                    </div>
+
+                    <div class="message-content">
+
+                        <div class="message-name">
+                            Astra AI
+                        </div>
+
+                        <div class="bubble">
+Assalam-o-Alaikum! 👋
+
+Main Astra AI hoon. Aap mujhse kuch bhi pooch sakte hain.
+                        </div>
+
+                        <button
+                            class="listen-btn"
+                            onclick="speakText(this, this.previousElementSibling.innerText)"
+                        >
+                            🔊 Listen
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- INPUT -->
+
+        <div class="input-area">
+
+            <div class="input-box">
+
+                <div class="input-row">
+
+
+                    <input
+                        type="file"
+                        id="imageInput"
+                        accept="image/*"
+                        hidden
+                    >
+
+
+                    <button
+                        class="icon-btn"
+                        title="Upload image"
+                        onclick="document.getElementById('imageInput').click()"
+                    >
+                        🖼️
+                    </button>
+
+
+                    <button
+                        class="icon-btn"
+                        id="micBtn"
+                        title="Voice input"
+                        onclick="startVoice()"
+                    >
+                        🎤
+                    </button>
+
+
+                    <textarea
+                        id="messageInput"
+                        placeholder="Message Astra..."
+                        rows="1"
+                    ></textarea>
+
+
+                    <button
+                        class="send-btn"
+                        id="sendBtn"
+                        onclick="sendMessage()"
+                    >
+                        ➤
+                    </button>
+
+
+                </div>
+
+
+                <div class="language-row">
+
+                    Voice language:
+
+                    <select id="voiceLanguage">
+
+                        <option value="auto">
+                            Auto
+                        </option>
+
+                        <option value="en-US">
+                            English
+                        </option>
+
+                        <option value="ur-PK">
+                            Urdu
+                        </option>
+
+                        <option value="pa-PK">
+                            Punjabi
+                        </option>
+
+                        <option value="hi-IN">
+                            Hindi
+                        </option>
+
+                        <option value="ar-SA">
+                            Arabic
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- API SETTINGS -->
+
+<div
+    class="modal"
+    id="settingsModal"
+>
+
+    <div class="modal-box">
+
+        <button
+            class="close-btn"
+            onclick="closeSettings()"
+        >
+            ✕
+        </button>
+
+        <h2>
+            Astra AI Settings
+        </h2>
+
+        <p>
+            Apni Groq API key yahan enter karein.
+            Key GitHub code mein save nahi hogi.
+        </p>
+
+        <input
+            type="password"
+            id="groqKeyInput"
+            placeholder="Enter Groq API key"
+            autocomplete="off"
+        >
+
+        <button
+            class="save-key-btn"
+            onclick="saveApiKey()"
+        >
+            Save API Key
+        </button>
+
+        <button
+            class="remove-key-btn"
+            onclick="removeApiKey()"
+        >
+            Remove API Key
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   ASTRA CONFIG
+========================================================= */
+
+const CHAT_MODEL =
+    "openai/gpt-oss-120b";
+
+
+const VISION_MODEL =
+    "meta-llama/llama-4-scout-17b-16e-instruct";
+
+
+const GROQ_ENDPOINT =
+    "https://api.groq.com/openai/v1/chat/completions";
+
+
+/* =========================================================
+   ASTRA PERSONALITY
+========================================================= */
+
+const ASTRA_SYSTEM = `
+You are Astra AI, a helpful, intelligent and professional AI assistant.
+
+Creator:
+You were created by Syed Riyan Shah.
+
+IMPORTANT BEHAVIOR:
+
+1. Answer naturally and clearly.
+2. Be helpful, respectful and accurate.
+3. Never claim to be a human.
+4. If you don't know something, say so honestly.
+5. Use the user's language whenever possible.
+6. You can communicate in English, Urdu, Roman Urdu,
+   Punjabi, Hindi, Arabic and other languages when possible.
+7. If the user writes Roman Urdu, normally answer in Roman Urdu.
+8. If the user writes Urdu script, answer in Urdu script.
+9. Use emojis naturally when they improve the response.
+10. Keep answers easy to understand unless detailed information
+    is requested.
+11. For programming questions, provide clean and complete code.
+12. Never reveal API keys, passwords or secret values.
+13. Never pretend that you performed an action you did not perform.
+
+When asked "who made you?", answer:
+
+"Mujhe Syed Riyan Shah ne banaya hai. Woh ek student hain."
+
+You are Astra AI.
+`;
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let history = [];
+
+let selectedImage = null;
+
+let currentSpeech = null;
+
+let isSending = false;
+
+
+/* =========================================================
+   API KEY
+========================================================= */
+
+function getApiKey() {
+
+    return localStorage.getItem(
+        "astra_groq_api_key"
+    );
+}
+
+
+function saveApiKey() {
+
+    const input =
+        document.getElementById(
+            "groqKeyInput"
+        );
+
+    const key =
+        input.value.trim();
+
+    if (!key) {
+
+        alert(
+            "Please enter your Groq API key."
+        );
+
+        return;
+    }
+
+
+    localStorage.setItem(
+        "astra_groq_api_key",
+        key
+    );
+
+
+    input.value = "";
+
+    closeSettings();
+
+
+    addAIMessage(
+        "API key saved in this browser. 🔐"
+    );
+}
+
+
+function removeApiKey() {
+
+    localStorage.removeItem(
+        "astra_groq_api_key"
+    );
+
+
+    document.getElementById(
+        "groqKeyInput"
+    ).value = "";
+
+
+    alert(
+        "API key removed."
+    );
+}
+
+
+function openSettings() {
+
+    document
+        .getElementById(
+            "settingsModal"
+        )
+        .classList.add("show");
+}
+
+
+function closeSettings() {
+
+    document
+        .getElementById(
+            "settingsModal"
+        )
+        .classList.remove("show");
+}
+
+
+/* =========================================================
+   IMAGE INPUT
+========================================================= */
+
+document
+    .getElementById("imageInput")
+    .addEventListener(
+        "change",
+        function(event) {
+
+            const file =
+                event.target.files[0];
+
+            if (!file) return;
+
+
+            if (!file.type.startsWith("image/")) {
+
+                alert(
+                    "Please select an image."
+                );
+
+                return;
+            }
+
+
+            if (file.size > 8 * 1024 * 1024) {
+
+                alert(
+                    "Image is too large. Please use an image under 8 MB."
+                );
+
+                return;
+            }
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function(e) {
+
+                    selectedImage =
+                        e.target.result;
+
+                    addUserImagePreview(
+                        selectedImage
+                    );
+                };
+
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+
+function addUserImagePreview(src) {
+
+    const chat =
+        document.getElementById(
+            "chatInner"
+        );
+
+
+    const wrapper =
+        document.createElement("div");
+
+
+    wrapper.className =
+        "message user";
+
+
+    const avatar =
+        document.createElement("div");
+
+    avatar.className =
+        "avatar user-avatar";
+
+    avatar.textContent =
+        "You";
+
+
+    const content =
+        document.createElement("div");
+
+    content.className =
+        "message-content";
+
+
+    const name =
+        document.createElement("div");
+
+    name.className =
+        "message-name";
+
+    name.textContent =
+        "You";
+
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "bubble";
+
+    bubble.textContent =
+        "🖼️ Image attached";
+
+
+    const image =
+        document.createElement("img");
+
+    image.className =
+        "image-preview";
+
+    image.src =
+        src;
+
+
+    content.appendChild(name);
+
+    content.appendChild(bubble);
+
+    content.appendChild(image);
+
+
+    wrapper.appendChild(avatar);
+
+    wrapper.appendChild(content);
+
+
+    chat.appendChild(wrapper);
+
+
+    scrollChat();
+}
+
+
+/* =========================================================
+   USER MESSAGE
+========================================================= */
+
+function addUserMessage(text) {
+
+    if (!text) return;
+
+
+    const chat =
+        document.getElementById(
+            "chatInner"
+        );
+
+
+    const wrapper =
+        document.createElement("div");
+
+    wrapper.className =
+        "message user";
+
+
+    const avatar =
+        document.createElement("div");
+
+    avatar.className =
+        "avatar user-avatar";
+
+    avatar.textContent =
+        "You";
+
+
+    const content =
+        document.createElement("div");
+
+    content.className =
+        "message-content";
+
+
+    const name =
+        document.createElement("div");
+
+    name.className =
+        "message-name";
+
+    name.textContent =
+        "You";
+
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "bubble";
+
+    bubble.textContent =
+        text;
+
+
+    content.appendChild(name);
+
+    content.appendChild(bubble);
+
+    wrapper.appendChild(avatar);
+
+    wrapper.appendChild(content);
+
+    chat.appendChild(wrapper);
+
+
+    scrollChat();
+}
+
+
+/* =========================================================
+   AI MESSAGE
+========================================================= */
+
+function addAIMessage(text) {
+
+    const chat =
+        document.getElementById(
+            "chatInner"
+        );
+
+
+    const wrapper =
+        document.createElement("div");
+
+    wrapper.className =
+        "message ai";
+
+
+    const avatar =
+        document.createElement("div");
+
+    avatar.className =
+        "avatar ai-avatar";
+
+    avatar.textContent =
+        "A";
+
+
+    const content =
+        document.createElement("div");
+
+    content.className =
+        "message-content";
+
+
+    const name =
+        document.createElement("div");
+
+    name.className =
+        "message-name";
+
+    name.textContent =
+        "Astra AI";
+
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "bubble";
+
+    bubble.textContent =
+        text;
+
+
+    const button =
+        document.createElement("button");
+
+    button.className =
+        "listen-btn";
+
+    button.textContent =
+        "🔊 Listen";
+
+
+    button.onclick =
+        function() {
+
+            speakText(
+                button,
+                text
+            );
+
+        };
+
+
+    content.appendChild(name);
+
+    content.appendChild(bubble);
+
+    content.appendChild(button);
+
+
+    wrapper.appendChild(avatar);
+
+    wrapper.appendChild(content);
+
+
+    chat.appendChild(wrapper);
+
+
+    scrollChat();
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+function showLoading() {
+
+    removeLoading();
+
+
+    const chat =
+        document.getElementById(
+            "chatInner"
+        );
+
+
+    const wrapper =
+        document.createElement("div");
+
+    wrapper.id =
+        "loadingMessage";
+
+    wrapper.className =
+        "message ai";
+
+
+    wrapper.innerHTML = `
+
+        <div class="avatar ai-avatar">
+            A
+        </div>
+
+        <div class="message-content">
+
+            <div class="message-name">
+                Astra AI
+            </div>
+
+            <div class="loading">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+        </div>
+    `;
+
+
+    chat.appendChild(wrapper);
+
+    scrollChat();
+}
+
+
+function removeLoading() {
+
+    const element =
+        document.getElementById(
+            "loadingMessage"
+        );
+
+
+    if (element) {
+
+        element.remove();
+    }
+}
+
+
+/* =========================================================
+   SEND MESSAGE
+========================================================= */
+
+async function sendMessage() {
+
+    if (isSending) return;
+
+
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
+
+
+    const text =
+        input.value.trim();
+
+
+    if (!text && !selectedImage) {
+
+        return;
+    }
+
+
+    const apiKey =
+        getApiKey();
+
+
+    if (!apiKey) {
+
+        openSettings();
+
+        alert(
+            "Please add your Groq API key first."
+        );
+
+        return;
+    }
+
+
+    if (text) {
+
+        addUserMessage(text);
+    }
+
+
+    const image =
+        selectedImage;
+
+
+    input.value = "";
+
+    selectedImage = null;
+
+
+    document.getElementById(
+        "imageInput"
+    ).value = "";
+
+
+    isSending = true;
+
+
+    document.getElementById(
+        "sendBtn"
+    ).disabled = true;
+
+
+    showLoading();
+
+
+    try {
+
+        let messages = [
+            {
+                role: "system",
+                content: ASTRA_SYSTEM
+            }
+        ];
+
+
+        /*
+         * Previous conversation
+         */
+
+        history
+            .slice(-30)
+            .forEach(function(item) {
+
+                if (
+                    item &&
+                    (
+                        item.role === "user" ||
+                        item.role === "assistant"
+                    ) &&
+                    typeof item.content === "string"
+                ) {
+
+                    messages.push({
+                        role: item.role,
+                        content: item.content
+                    });
+
+                }
+
+            });
+
+
+        /*
+         * Image request
+         */
+
+        if (image) {
+
+            messages.push({
+
+                role: "user",
+
+                content: [
+
+                    {
+                        type: "text",
+
+                        text:
+                            text ||
+                            "Please analyze this image and explain clearly what you see."
+                    },
+
+                    {
+                        type: "image_url",
+
+                        image_url: {
+                            url: image
+                        }
+                    }
+
+                ]
+
+            });
+
+        }
+
+        /*
+         * Normal request
+         */
+
+        else {
+
+            messages.push({
+
+                role: "user",
+
+                content:
+                    text
+
+            });
+
+        }
+
+
+        const response =
+            await fetch(
+                GROQ_ENDPOINT,
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            "Bearer " + apiKey
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            model:
+                                image
+                                    ? VISION_MODEL
+                                    : CHAT_MODEL,
+
+                            messages:
+                                messages,
+
+                            temperature:
+                                image
+                                    ? 0.5
+                                    : 0.7,
+
+                            max_tokens:
+                                4096
+
+                        })
+
+                }
+            );
+
+
+        let data;
+
+        try {
+
+            data =
+                await response.json();
+
+        } catch {
+
+            data = {};
+        }
+
+
+        removeLoading();
+
+
+        if (!response.ok) {
+
+            let errorMessage =
+                data?.error?.message ||
+                data?.error ||
+                "Groq API request failed.";
+
+
+            if (
+                response.status === 401
+            ) {
+
+                errorMessage =
+                    "API key invalid hai. API Settings mein apni key check karein.";
+
+            }
+
+
+            addAIMessage(
+                "⚠️ " + errorMessage
+            );
+
+
+            return;
+        }
+
+
+        const answer =
+            data?.choices?.[0]?.message?.content ||
+            "No answer received.";
+
+
+        history.push({
+
+            role: "user",
+
+            content:
+                image
+                    ? (
+                        text
+                            ? text + " [Image attached]"
+                            : "[Image]"
+                    )
+                    : text
+
+        });
+
+
+        history.push({
+
+            role: "assistant",
+
+            content:
+                answer
+
+        });
+
+
+        /*
+         * Keep browser history reasonable
+         */
+
+        if (history.length > 40) {
+
+            history =
+                history.slice(-40);
+        }
+
+
+        addAIMessage(
+            answer
+        );
+
+
+    } catch (error) {
+
+        removeLoading();
+
+
+        addAIMessage(
+            "⚠️ Connection error. Internet connection aur Groq API key check karein."
+        );
+
+        console.error(error);
+
+    } finally {
+
+        isSending = false;
+
+        document.getElementById(
+            "sendBtn"
+        ).disabled = false;
+    }
+}
+
+
+/* =========================================================
+   ENTER KEY
+========================================================= */
+
+document
+    .getElementById("messageInput")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Enter" &&
+                !event.shiftKey
+            ) {
+
+                event.preventDefault();
+
+                sendMessage();
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   VOICE INPUT
+========================================================= */
+
+function startVoice() {
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+
+    if (!SpeechRecognition) {
+
+        alert(
+            "Voice recognition is not supported in this browser. Please use Chrome."
+        );
+
+        return;
+    }
+
+
+    const recognition =
+        new SpeechRecognition();
+
+
+    const selectedLanguage =
+        document.getElementById(
+            "voiceLanguage"
+        ).value;
+
+
+    recognition.lang =
+        selectedLanguage === "auto"
+            ? "en-US"
+            : selectedLanguage;
+
+
+    recognition.interimResults =
+        false;
+
+
+    recognition.continuous =
+        false;
+
+
+    const mic =
+        document.getElementById(
+            "micBtn"
+        );
+
+
+    mic.textContent =
+        "🔴";
+
+
+    try {
+
+        recognition.start();
+
+    } catch {
+
+        mic.textContent =
+            "🎤";
+
+        return;
+    }
+
+
+    recognition.onresult =
+        function(event) {
+
+            const transcript =
+                event.results[0][0].transcript;
+
+
+            document
+                .getElementById(
+                    "messageInput"
+                )
+                .value =
+                transcript;
+
+        };
+
+
+    recognition.onerror =
+        function(event) {
+
+            console.error(
+                "Speech recognition:",
+                event.error
+            );
+
+            mic.textContent =
+                "🎤";
+        };
+
+
+    recognition.onend =
+        function() {
+
+            mic.textContent =
+                "🎤";
+        };
+}
+
+
+/* =========================================================
+   LISTEN / TEXT TO SPEECH
+========================================================= */
+
+function speakText(button, text) {
+
+    if (!text) return;
+
+
+    if (
+        "speechSynthesis"
+        in window
+    ) {
+
+        window.speechSynthesis.cancel();
+
+    }
+
+
+    if (
+        currentSpeech === button
+    ) {
+
+        currentSpeech =
+            null;
+
+        button.textContent =
+            "🔊 Listen";
+
+        return;
+    }
+
+
+    const language =
+        document.getElementById(
+            "voiceLanguage"
+        ).value;
+
+
+    const utterance =
+        new SpeechSynthesisUtterance(
+            text
+        );
+
+
+    if (language !== "auto") {
+
+        utterance.lang =
+            language;
+
+    }
+
+
+    utterance.rate =
+        1;
+
+
+    utterance.pitch =
+        1;
+
+
+    currentSpeech =
+        button;
+
+
+    button.textContent =
+        "⏹ Stop";
+
+
+    utterance.onend =
+        function() {
+
+            button.textContent =
+                "🔊 Listen";
+
+            currentSpeech =
+                null;
+        };
+
+
+    utterance.onerror =
+        function() {
+
+            button.textContent =
+                "🔊 Listen";
+
+            currentSpeech =
+                null;
+        };
+
+
+    window.speechSynthesis.speak(
+        utterance
+    );
+}
+
+
+/* =========================================================
+   NEW CHAT
+========================================================= */
+
+function newChat() {
+
+    if (
+        history.length > 0
+    ) {
+
+        const confirmed =
+            confirm(
+                "Start a new chat?"
+            );
+
+
+        if (!confirmed) return;
+    }
+
+
+    history = [];
+
+    selectedImage = null;
+
+
+    document.getElementById(
+        "imageInput"
+    ).value = "";
+
+
+    document.getElementById(
+        "messageInput"
+    ).value = "";
+
+
+    document.getElementById(
+        "chatInner"
+    ).innerHTML = "";
+
+
+    addAIMessage(
+        "New chat started. 👋 How can I help you?"
+    );
+}
+
+
+/* =========================================================
+   SCROLL
+========================================================= */
+
+function scrollChat() {
+
+    const chat =
+        document.getElementById(
+            "chat"
+        );
+
+
+    chat.scrollTop =
+        chat.scrollHeight;
+}
+
+
+/* =========================================================
+   CLOSE MODAL WHEN CLICKING OUTSIDE
+========================================================= */
+
+document
+    .getElementById("settingsModal")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === this
+            ) {
+
+                closeSettings();
+
+            }
+
+        }
+    );
+
+
+</script>
+
+</body>
+</html>
